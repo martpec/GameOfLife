@@ -5,23 +5,27 @@ namespace GameOfLife;
 
 public class JsonStorage : IStorage
 {
-    public void Save()
+    public void Save(Grid grid)
     {
-        
+        string filePath = "gridSave.json";
+        string jsonString = JsonSerializer.Serialize(grid);
+        File.WriteAllText(filePath, jsonString);
     }
 
     public Grid Load()
     {
         Console.Write("Enter the path to JSON file: ");
         string? filepath = Console.ReadLine();
-         if (!string.IsNullOrWhiteSpace(filepath) && filepath.EndsWith(".json"))
+        if (!string.IsNullOrWhiteSpace(filepath) && filepath.EndsWith(".json"))
+        {
+            string content = File.ReadAllText(filepath);
+            Grid? grid = JsonSerializer.Deserialize<Grid>(content);
+            if (grid != null)
             {
-                Grid? grid = JsonSerializer.Deserialize<Grid>(filepath);
+                return grid;
             }
-    
-
-        
-
-        return new Grid();
+        }
+        return new Grid(0, 0, new bool[0][]);
     }
+
 }

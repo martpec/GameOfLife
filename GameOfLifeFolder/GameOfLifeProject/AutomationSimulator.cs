@@ -2,7 +2,7 @@ namespace GameOfLife;
 
 public class AutomationSimulator
 {
-    public void StartSimulation(Grid grid)
+    public void StartSimulation(Grid grid,JsonStorage storage)
     {
         DisplayGrid(grid);
         while(true)
@@ -17,6 +17,7 @@ public class AutomationSimulator
             case "N":
                 break;
             case "S":
+                storage.Save(grid);
                 break;
             case "X":
                 return;

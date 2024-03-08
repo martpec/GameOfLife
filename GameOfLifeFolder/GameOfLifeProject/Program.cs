@@ -6,15 +6,16 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Welcome in Game of Life Simulator");
-        Grid grid = GridSetup();
+        JsonStorage storage  = new JsonStorage();
         AutomationSimulator sim = new AutomationSimulator();
-        sim.StartSimulation(grid);
+        
+        Console.WriteLine("Welcome in Game of Life Simulator");
+        Grid grid = GridSetup(storage);
+        sim.StartSimulation(grid, storage);
     }
 
-    public static Grid GridSetup()
+    public static Grid GridSetup(JsonStorage storage)
     {
-        JsonStorage storage  = new JsonStorage();
         while (true)
         {
             Console.WriteLine("\nChoose your grid setup:");
@@ -23,7 +24,7 @@ public class Program
             string? input = Console.ReadLine();
             if (input == "1")
             {
-                return RandomGrid();
+                return Grid.RandomGrid();
             }
             else if (input == "2")
             {
@@ -36,24 +37,5 @@ public class Program
             }
         }
     }
-    public static Grid RandomGrid()
-    {
-        Console.WriteLine("You selected option 1");
-        Console.Write("Enter the number of rows for the grid (4-100): ");
-        // need loop here
-        if (!int.TryParse(Console.ReadLine(), out int rows))
-        {
-
-        }
-        //need loop here also check size
-        Console.WriteLine("Enter the number of columns for the grid (4-100): ");
-        if (!int.TryParse(Console.ReadLine(), out int columns))
-        {
-
-        }
-        // actual grid creation
-        return new Grid();
-    }
-
 
 }
