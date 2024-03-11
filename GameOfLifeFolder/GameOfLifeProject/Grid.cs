@@ -7,8 +7,8 @@ public class Grid : IGrid
 {
     public int rows { get; set; }
     public int columns { get; set; }
-    public bool[][] grid { get; set; }
-    public Grid(int rows, int columns, bool[][] grid)
+    public Cell[][] grid { get; set; }
+    public Grid(int rows, int columns, Cell[][] grid)
     {
         this.rows = rows;
         this.columns = columns;
@@ -34,13 +34,13 @@ public class Grid : IGrid
         int rows = GetInputRowColumn("Enter the number of rows for the grid (4-100): ");
         int columns = GetInputRowColumn("Enter the number of columns for the grid (4-100): ");
 
-        bool[][] grid = new bool[rows][];
+        Cell[][] grid = new Cell[rows][];
         for (int i = 0; i < rows; i++)
         {
-            grid[i] = new bool[columns];
+            grid[i] = new Cell[columns];
             for (int j = 0; j < columns; j++)
                     {
-                        grid[i][j] = random.Next(2) == 0;
+                        grid[i][j] = new Cell(random.Next(2) == 0);
                     }
         }
         return new Grid(rows, columns, grid);
@@ -60,13 +60,21 @@ public class Grid : IGrid
             continue;
         }
     }
-    public void UpdateCellState()
+    public void UpdateCellState(Grid grid, int row, int column)
     {
-
+        Cell cell = grid.grid[row][column];
+        if(grid.GetCellState(row,column))
+        {
+            cell.State = false;
+        }
+        else
+        {
+            cell.State = true;
+        }
     }
 
-    public bool GetCellState()
+    public bool GetCellState(int row, int column)
     {
-        return false;
+        return grid[row][column].State;
     }
 }

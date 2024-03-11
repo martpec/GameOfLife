@@ -2,10 +2,12 @@ namespace GameOfLife;
 
 public class AutomationSimulator
 {
-    public void StartSimulation(Grid grid,JsonStorage storage)
+    public void StartSimulation(Grid grid, JsonStorage storage)
     {
+        Cell.UpdateNeighbours(grid);
         DisplayGrid(grid);
-        while(true)
+        
+        while (true)
         {
             Console.WriteLine("Press 'N' to advance to the next generation.");
             Console.WriteLine("Press 'S' to save the current grid state to a file.");
@@ -13,23 +15,72 @@ public class AutomationSimulator
             string? option = Console.ReadLine();
 
             switch (option)
-        {
-            case "N":
-                break;
-            case "S":
-                storage.Save(grid);
-                break;
-            case "X":
-                return;
-            default:
-                Console.WriteLine("Invalid option. Please try again.");
-                break;
-        }
+            {
+                case "N":
+                    CalculateNextGeneration(grid);
+                    Cell.UpdateNeighbours(grid);
+                    DisplayGrid(grid);
+                    break;
+                case "S":
+                    storage.Save(grid);
+                    break;
+                case "X":
+                    return;
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
+            }
         }
     }
 
     public void DisplayGrid(Grid grid)
     {
-        // for loops 
+        for (int i = 0; i < grid.rows; i++)
+        {
+            for (int j = 0; j < grid.columns; j++)
+            {
+                Console.Write(grid.GetCellState(i, j) ? "O" : ".");
+            }
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+    }
+
+    public void CalculateNextGeneration(Grid grid)
+    {
+        for (int i = 0; i < grid.rows; i++)
+        {
+            for (int j = 0; j < grid.columns; j++)
+            {
+                int trues = CountTrueInList(grid.grid[i][j].Neighbours);
+                if (grid.GetCellState(i,j))
+                {
+                    if (trues < 2 || trues > 3)
+                    {
+                        grid.UpdateCellState(grid, i, j);
+                    }
+                }
+                else
+                {
+                    if (trues == 3)
+                    {
+                        grid.UpdateCellState(grid, i, j);
+                    }
+                }
+            }
+        }
+    }
+
+    public int CountTrueInList(List<bool> list)
+    {
+        int count = 0;
+        foreach (bool item in list)
+        {
+            if (item)
+            {
+                count++;
+            }
+        }
+        return count;
     }
 }
