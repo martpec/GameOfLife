@@ -2,7 +2,13 @@ namespace GameOfLife;
 
 public class AutomationSimulator
 {
-    public void StartSimulation(Grid grid, JsonStorage storage)
+    private readonly IStorage storage;
+    public AutomationSimulator(IStorage storage)
+    {
+        this.storage = storage;
+    }
+    
+    public void StartSimulation(Grid grid)
     {
         Cell.UpdateNeighbours(grid);
         DisplayGrid(grid);

@@ -7,11 +7,11 @@ public class Program
     public static void Main(string[] args)
     {
         JsonStorage storage  = new JsonStorage();
-        AutomationSimulator sim = new AutomationSimulator();
+        AutomationSimulator sim = new AutomationSimulator(storage);
         
         Console.WriteLine("Welcome in Game of Life Simulator");
         Grid grid = GridSetup(storage);
-        sim.StartSimulation(grid, storage);
+        sim.StartSimulation(grid);
     }
 
     public static Grid GridSetup(JsonStorage storage)
