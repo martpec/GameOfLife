@@ -20,17 +20,17 @@ public class AutomationSimulator
             Console.WriteLine("Press 'X' to exit the simulation.");
             string? option = Console.ReadLine();
 
-            switch (option)
+            switch (option?.ToLower())
             {
-                case "N":
-                    CalculateNextGeneration(grid);
+                case "n":
                     Cell.UpdateNeighbours(grid);
+                    CalculateNextGeneration(grid);
                     DisplayGrid(grid);
                     break;
-                case "S":
+                case "s":
                     storage.Save(grid);
                     break;
-                case "X":
+                case "x":
                     return;
                 default:
                     Console.WriteLine("Invalid option. Please try again.");
@@ -41,6 +41,7 @@ public class AutomationSimulator
 
     public void DisplayGrid(Grid grid)
     {
+        Console.WriteLine();
         for (int i = 0; i < grid.rows; i++)
         {
             for (int j = 0; j < grid.columns; j++)
