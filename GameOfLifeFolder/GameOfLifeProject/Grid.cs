@@ -3,6 +3,43 @@ using System.Text;
 
 namespace GameOfLife;
 
+public class GridFactory
+{
+    public static Grid RandomGrid()
+    {
+        Random random = new Random();
+        Console.WriteLine("You selected option 1");
+
+        int rows = GetInputRowColumn("Enter the number of rows for the grid (4-100): ");
+        int columns = GetInputRowColumn("Enter the number of columns for the grid (4-100): ");
+
+        Cell[][] grid = new Cell[rows][];
+        for (int i = 0; i < rows; i++)
+        {
+            grid[i] = new Cell[columns];
+            for (int j = 0; j < columns; j++)
+            {
+                grid[i][j] = new Cell(random.Next(2) == 0);
+            }
+        }
+        return new Grid(rows, columns, grid);
+    }
+
+    private static int GetInputRowColumn(string prompt)
+    {
+        int number;
+        while (true)
+        {
+            Console.WriteLine(prompt);
+            if (int.TryParse(Console.ReadLine(), out number) && 4 <= number && number <= 100)
+            {
+                return number;
+            }
+            Console.WriteLine("Wrong input");
+            continue;
+        }
+    }
+}
 public class Grid : IGrid
 {
     public int rows { get; set; }
@@ -26,44 +63,11 @@ public class Grid : IGrid
         }
         return sb.ToString();
     }
-    public static Grid RandomGrid()
-    {
-        Random random = new Random();
-        Console.WriteLine("You selected option 1");
 
-        int rows = GetInputRowColumn("Enter the number of rows for the grid (4-100): ");
-        int columns = GetInputRowColumn("Enter the number of columns for the grid (4-100): ");
-
-        Cell[][] grid = new Cell[rows][];
-        for (int i = 0; i < rows; i++)
-        {
-            grid[i] = new Cell[columns];
-            for (int j = 0; j < columns; j++)
-                    {
-                        grid[i][j] = new Cell(random.Next(2) == 0);
-                    }
-        }
-        return new Grid(rows, columns, grid);
-    }
-
-    private static int GetInputRowColumn(string prompt)
-    {
-        int number;
-        while(true)
-        {
-            Console.WriteLine(prompt);
-            if (int.TryParse(Console.ReadLine(), out number) && 4 <= number && number <= 100)
-            {
-                return number;
-            }
-            Console.WriteLine("Wrong input");
-            continue;
-        }
-    }
     public void UpdateCellState(Grid grid, int row, int column)
     {
         Cell cell = grid.grid[row][column];
-        if(grid.GetCellState(row,column))
+        if (grid.GetCellState(row, column))
         {
             cell.State = false;
         }

@@ -24,7 +24,7 @@ public class Program
             string? input = Console.ReadLine();
             if (input == "1")
             {
-                return Grid.RandomGrid();
+                return GridFactory.RandomGrid();
             }
             else if (input == "2")
             {
