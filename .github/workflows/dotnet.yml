@@ -26,10 +26,11 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
       working-directory: GameOfLifeProject
+      
     - name: Restore dependencies
       run: dotnet restore
       working-directory: GameOfLife.Tests
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test
       working-directory: GameOfLife.Tests
       
