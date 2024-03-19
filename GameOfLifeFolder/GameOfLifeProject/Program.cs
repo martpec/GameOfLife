@@ -14,7 +14,7 @@ public class Program
         sim.StartSimulation(grid);
     }
 
-    public static Grid GridSetup(JsonStorage storage)
+    public static Grid GridSetup(IStorage storage)
     {
         while (true)
         {
