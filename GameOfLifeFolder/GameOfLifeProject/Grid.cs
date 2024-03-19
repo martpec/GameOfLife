@@ -3,7 +3,7 @@ using System.Text;
 
 namespace GameOfLife;
 
-public class GridFactory
+public class GridCreation
 {
     public static Grid RandomGrid()
     {
