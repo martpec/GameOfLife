@@ -22,15 +22,15 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: GameOfLifeProject
+      working-directory: GameOfLifeFolder/GameOfLifeProject
     - name: Build
       run: dotnet build --no-restore
-      working-directory: GameOfLifeProject
+      working-directory: GameOfLifeFolder/GameOfLifeProject
       
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: GameOfLife.Tests
+      working-directory: GameOfLifeFolder/GameOfLife.Tests
     - name: Test
       run: dotnet test
-      working-directory: GameOfLife.Tests
+      working-directory: GameOfLifeFolder/GameOfLife.Tests
       
