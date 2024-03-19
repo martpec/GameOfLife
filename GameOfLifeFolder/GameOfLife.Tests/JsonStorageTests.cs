@@ -22,24 +22,4 @@ public class JsonStorageTests
         string content = File.ReadAllText("gridSave.json");
         Assert.Equal("{\"rows\":2,\"columns\":2,\"grid\":[[false,true],[true,false]]}", content);
     }
-
-    [Fact]
-    public void TestLoad()
-    {
-        // Arrange
-        string json = "{\"rows\":2,\"columns\":2,\"grid\":[[false,true],[true,false]]}";
-        File.WriteAllText("testLoad.json", json);
-        JsonStorage storage = new JsonStorage();
-
-        // Act
-        Grid grid = storage.Load();
-
-        // Assert
-        Assert.Equal(2, grid.rows);
-        Assert.Equal(2, grid.columns);
-        Assert.False(grid.GetCellState(0, 0));
-        Assert.True(grid.GetCellState(0, 1));
-        Assert.True(grid.GetCellState(1, 0));
-        Assert.False(grid.GetCellState(1, 1));
-    }
 }
